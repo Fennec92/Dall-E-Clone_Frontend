@@ -1,5 +1,4 @@
 import { BrowserRouter } from "react-router-dom";
-
 import { Header, Main } from "./components/exportComponents";
 
 const App = () => {
