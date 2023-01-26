@@ -1,4 +1,3 @@
-const FormField = () => {
-    return <div>FormField</div>;
-};
+const FormField = () => {};
+
 export default FormField;

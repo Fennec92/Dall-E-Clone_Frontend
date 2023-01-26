@@ -2,13 +2,19 @@ import { useState, useEffect } from "react";
 
 import { Card, Loader, FormField } from "../components/exportComponents";
 
-const renderCards = ({ data, title }) => {
+const RenderCards = ({ data, title }) => {
     if (data?.length > 0) {
         const cardsToRender = data.map((item) => (
             <Card key={item._id} {...item} />
         ));
         return cardsToRender;
     }
+
+    return (
+        <h2 className="mt-5 text-xl font-bold uppercase text-[#6449ff]">
+            {title}
+        </h2>
+    );
 };
 
 const Home = () => {
@@ -48,7 +54,16 @@ const Home = () => {
                                 </span>
                             </h2>
                         )}
-                        <div className="grid grid-cols-1 gap-3 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4"></div>
+                        <div className="grid grid-cols-1 gap-3 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
+                            {searchText ? (
+                                <RenderCards
+                                    data={[]}
+                                    title="No search results found"
+                                />
+                            ) : (
+                                <RenderCards data={[]} title="No posts found" />
+                            )}
+                        </div>
                     </>
                 )}
             </div>
