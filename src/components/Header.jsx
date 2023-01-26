@@ -9,7 +9,7 @@ const Header = () => {
             </Link>
             <Link
                 to="/create"
-                className="rounded-xl bg-[#df2554] px-4 py-2 font-inter font-medium text-white"
+                className="rounded-md bg-[#df2554] px-4 py-2 font-inter font-medium text-white"
             >
                 Neu erstellen
             </Link>
