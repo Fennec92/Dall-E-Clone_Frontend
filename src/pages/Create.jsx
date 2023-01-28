@@ -39,7 +39,7 @@ const Create = () => {
             <form className="mt-16 max-w-3xl" onClick={handleSubmit}>
                 <div className="flex flex-col gap-5">
                     <FormField
-                        labelName="Your Name"
+                        labelName="Dein Name"
                         type="text"
                         name="name"
                         placeholder="John Doe"
@@ -47,7 +47,7 @@ const Create = () => {
                         handleChange={handleChange}
                     />
                     <FormField
-                        labelName="Your Description"
+                        labelName="Beschreibe das Bild"
                         type="text"
                         name="description"
                         placeholder="the world of the book 1984 by george orwell"
@@ -56,6 +56,23 @@ const Create = () => {
                         isRandomDescription
                         handleRandomDescription={handleRandomDescription}
                     />
+                    <div className="relative flex h-64 w-64 items-center justify-center rounded-lg border border-gray-300 bg-gray-50 p-3 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500">
+                        {generatingImage ? (
+                            <Loader />
+                        ) : form.image ? (
+                            <img
+                                src={form.image}
+                                alt={form.description}
+                                className="h-full w-full object-contain"
+                            />
+                        ) : (
+                            <img
+                                src={preview}
+                                alt="preview"
+                                className="w-3/4 opacity-30"
+                            />
+                        )}
+                    </div>
                 </div>
             </form>
         </section>
