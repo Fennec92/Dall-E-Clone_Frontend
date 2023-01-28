@@ -15,6 +15,14 @@ const Create = () => {
     const [generatingImage, setGeneratingImage] = useState(false);
     const [loading, setLoading] = useState(false);
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+    };
+
+    const handleChange = (e) => {};
+
+    const handleRandomDescription = () => {};
+
     return (
         <section className="mx-auto max-w-7xl">
             <div>
@@ -23,10 +31,33 @@ const Create = () => {
                 </h1>
                 <p className="mt-2 max-w-[500px] text-[1rem] text-[#666e75]">
                     {" "}
-                    Erstelle phantasievolle und optisch atemberaubende Bilder
-                    mit der DALL-E KI.
+                    Erstelle und teile phantasievolle und optisch atemberaubende
+                    Bilder mit der DALL-E KI.
                 </p>
             </div>
+
+            <form className="mt-16 max-w-3xl" onClick={handleSubmit}>
+                <div className="flex flex-col gap-5">
+                    <FormField
+                        labelName="Your Name"
+                        type="text"
+                        name="name"
+                        placeholder="John Doe"
+                        value={form.name}
+                        handleChange={handleChange}
+                    />
+                    <FormField
+                        labelName="Your Description"
+                        type="text"
+                        name="description"
+                        placeholder="the world of the book 1984 by george orwell"
+                        value={form.description}
+                        handleChange={handleChange}
+                        isRandomDescription
+                        handleRandomDescription={handleRandomDescription}
+                    />
+                </div>
+            </form>
         </section>
     );
 };
