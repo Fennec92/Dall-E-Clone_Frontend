@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { preview } from "../assets/exportAssets";
 import { getRandomDescription } from "../utilityFunctions/exportUtilityFunctions";
 import { FormField, Loader } from "../components/exportComponents";
+import { random } from "../random_descriptions/random";
 
 const Create = () => {
     const navigate = useNavigate();
@@ -12,16 +13,37 @@ const Create = () => {
         description: "",
         image: "",
     });
-    const [generatingImage, setGeneratingImage] = useState(false);
+    const [creatingImage, setCreatingImage] = useState(false);
     const [loading, setLoading] = useState(false);
+
+    console.log(form);
 
     const handleSubmit = (e) => {
         e.preventDefault();
     };
 
-    const handleChange = (e) => {};
+    const handleChange = (e) => {
+        const { name, value } = e.target;
 
-    const handleRandomDescription = () => {};
+        setForm((prev) => {
+            return {
+                ...prev,
+                [name]: value,
+            };
+        });
+    };
+
+    const handleRandomDescription = () => {
+        const randomDesc = getRandomDescription(form.description);
+        setForm((prev) => {
+            return {
+                ...prev,
+                description: randomDesc,
+            };
+        });
+    };
+
+    const createImage = () => {};
 
     return (
         <section className="mx-auto max-w-7xl">
@@ -42,7 +64,7 @@ const Create = () => {
                         labelName="Dein Name"
                         type="text"
                         name="name"
-                        placeholder="John Doe"
+                        placeholder="Max Mustermann"
                         value={form.name}
                         handleChange={handleChange}
                     />
@@ -50,14 +72,14 @@ const Create = () => {
                         labelName="Beschreibe das Bild"
                         type="text"
                         name="description"
-                        placeholder="the world of the book 1984 by george orwell"
+                        placeholder="a cat submarine chimera, digital art"
                         value={form.description}
                         handleChange={handleChange}
                         isRandomDescription
                         handleRandomDescription={handleRandomDescription}
                     />
-                    <div className="relative flex h-64 w-64 items-center justify-center rounded-lg border border-gray-300 bg-gray-50 p-3 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500">
-                        {generatingImage ? (
+                    <div className="flex h-64 w-64 items-center justify-center rounded-lg border border-gray-300 bg-gray-50 p-3 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500">
+                        {creatingImage ? (
                             <Loader />
                         ) : form.image ? (
                             <img
@@ -69,9 +91,30 @@ const Create = () => {
                             <img
                                 src={preview}
                                 alt="preview"
-                                className="w-3/4 opacity-30"
+                                className="h-3/4 w-3/4 opacity-30"
                             />
                         )}
+                    </div>
+                </div>
+                <div className="mt-5">
+                    <button
+                        className="w-full rounded-md bg-green-700 px-5 py-2.5 text-sm font-medium text-white sm:w-auto"
+                        type="button"
+                        onClick={createImage}
+                    >
+                        {creatingImage ? "OK..." : "Erstellen"}
+                    </button>
+                    <div className="mt-10">
+                        <p className="text-sm text-[#666e75]">
+                            Wenn du mit dem Ergebnis zufrieden bist, kannst du
+                            es mit der Community teilen!
+                        </p>
+                        <button
+                            className="mt-3 w-full rounded-md bg-blue-700 px-4 py-2.5 text-sm font-medium text-white sm:w-auto"
+                            type="submit"
+                        >
+                            {loading ? "Teile..." : "Teilen"}
+                        </button>
                     </div>
                 </div>
             </form>
