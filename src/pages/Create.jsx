@@ -43,7 +43,36 @@ const Create = () => {
         });
     };
 
-    const createImage = () => {};
+    const createImage = async () => {
+        if (form.description) {
+            try {
+                setCreatingImage(true);
+                const openAiRouteResponse = await fetch(
+                    "http://localhost:8080/api/openai",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ description: form.description }),
+                    },
+                );
+                const getImageFromDalle = await openAiRouteResponse.json();
+                setForm((prev) => {
+                    return {
+                        ...prev,
+                        image: `data:image/jpeg;base64,${getImageFromDalle.image}`,
+                    };
+                });
+            } catch (error) {
+                alert(error);
+            } finally {
+                setCreatingImage(false);
+            }
+        } else {
+            alert("Bitte eine Beschreibung angeben");
+        }
+    };
 
     return (
         <section className="mx-auto max-w-7xl">
