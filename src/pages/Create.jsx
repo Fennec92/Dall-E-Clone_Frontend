@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { preview } from "../assets/exportAssets";
 import { getRandomDescription } from "../utilityFunctions/exportUtilityFunctions";
 import { FormField, Loader } from "../components/exportComponents";
-import { random } from "../random_descriptions/random";
 
 const Create = () => {
     const navigate = useNavigate();
@@ -14,13 +13,9 @@ const Create = () => {
         image: "",
     });
     const [creatingImage, setCreatingImage] = useState(false);
-    const [loading, setLoading] = useState(false);
+    const [sharing, setSharing] = useState(false);
 
     console.log(form);
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -71,6 +66,36 @@ const Create = () => {
             }
         } else {
             alert("Bitte eine Beschreibung angeben");
+        }
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if (form.description && form.image) {
+            setSharing(true);
+
+            try {
+                const postResponse = await fetch(
+                    "http://localhost:8080/api/post",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(form),
+                    },
+                );
+
+                await postResponse.json();
+                navigate("/");
+            } catch (error) {
+                alert(error);
+            } finally {
+                setSharing(false);
+            }
+        } else {
+            alert("Kein Bild zum teilen erstellt");
         }
     };
 
@@ -142,7 +167,7 @@ const Create = () => {
                             className="mt-3 w-full rounded-md bg-blue-700 px-4 py-2.5 text-sm font-medium text-white sm:w-auto"
                             type="submit"
                         >
-                            {loading ? "Teile..." : "Teilen"}
+                            {sharing ? "Teile..." : "Teilen"}
                         </button>
                     </div>
                 </div>

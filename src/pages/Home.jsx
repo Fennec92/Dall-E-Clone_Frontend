@@ -22,6 +22,34 @@ const Home = () => {
     const [allPosts, setAllPosts] = useState(null);
     const [searchText, setSearchText] = useState("");
 
+    useEffect(() => {
+        const fetchAllPosts = async () => {
+            setLoading(true);
+
+            try {
+                const getAllPosts = await fetch(
+                    "http://localhost:8080/api/post",
+                    {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    },
+                );
+                if (getAllPosts.ok) {
+                    const getAllPostsResult = await getAllPosts.json();
+                    setAllPosts(getAllPostsResult.data.reverse());
+                }
+            } catch (error) {
+                alert(error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchAllPosts();
+    }, []);
+
     return (
         <section className="mx-auto max-w-7xl">
             <div>
@@ -61,7 +89,10 @@ const Home = () => {
                                     title="No search results found"
                                 />
                             ) : (
-                                <RenderCards data={[]} title="No posts found" />
+                                <RenderCards
+                                    data={allPosts}
+                                    title="No posts found"
+                                />
                             )}
                         </div>
                     </>

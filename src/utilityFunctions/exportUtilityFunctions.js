@@ -1,3 +1,4 @@
+import FileSaver from "file-saver";
 import { random } from "../random_descriptions/random";
 
 const getRandomDescription = (description) => {
@@ -12,4 +13,8 @@ const getRandomDescription = (description) => {
     return randomDescription;
 };
 
-export { getRandomDescription };
+const downloadImage = async (_id, image) => {
+    FileSaver.saveAs(image, `image_${_id}.jpg`);
+};
+
+export { getRandomDescription, downloadImage };
