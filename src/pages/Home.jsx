@@ -21,6 +21,8 @@ const Home = () => {
     const [loading, setLoading] = useState(false);
     const [allPosts, setAllPosts] = useState(null);
     const [searchText, setSearchText] = useState("");
+    const [searchedResults, setSearchedResults] = useState(null);
+    const [searchTimeout, setSearchTimeout] = useState(null);
 
     useEffect(() => {
         const fetchAllPosts = async () => {
@@ -34,7 +36,7 @@ const Home = () => {
                         headers: {
                             "Content-Type": "application/json",
                         },
-                    },
+                    }
                 );
                 if (getAllPosts.ok) {
                     const getAllPostsResult = await getAllPosts.json();
@@ -50,6 +52,27 @@ const Home = () => {
         fetchAllPosts();
     }, []);
 
+    const handleSearchChange = (e) => {
+        clearTimeout(searchTimeout);
+
+        setSearchText(e.target.value);
+        setSearchTimeout(
+            setTimeout(() => {
+                const searchResults = allPosts.filter(
+                    (item) =>
+                        item.name
+                            .toLowerCase()
+                            .includes(searchText.toLowerCase()) ||
+                        item.description
+                            .toLowerCase()
+                            .includes(searchText.toLowerCase())
+                );
+
+                setSearchedResults(searchResults);
+            }, 500)
+        );
+    };
+
     return (
         <section className="mx-auto max-w-7xl">
             <div>
@@ -64,7 +87,13 @@ const Home = () => {
             </div>
 
             <div className="mt-16">
-                <FormField />
+                <FormField
+                    type="text"
+                    name="text"
+                    placeholder="Search posts"
+                    value={searchText}
+                    handleChange={handleSearchChange}
+                />
             </div>
 
             <div className="mt-10">
@@ -85,7 +114,7 @@ const Home = () => {
                         <div className="grid grid-cols-1 gap-3 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
                             {searchText ? (
                                 <RenderCards
-                                    data={[]}
+                                    data={searchedResults}
                                     title="No search results found"
                                 />
                             ) : (

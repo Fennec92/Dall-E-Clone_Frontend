@@ -50,7 +50,7 @@ const Create = () => {
                             "Content-Type": "application/json",
                         },
                         body: JSON.stringify({ description: form.description }),
-                    },
+                    }
                 );
                 const getImageFromDalle = await openAiRouteResponse.json();
                 setForm((prev) => {
@@ -84,7 +84,7 @@ const Create = () => {
                             "Content-Type": "application/json",
                         },
                         body: JSON.stringify(form),
-                    },
+                    }
                 );
 
                 await postResponse.json();
