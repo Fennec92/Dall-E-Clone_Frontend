@@ -112,7 +112,7 @@ const Create = () => {
                 </p>
             </div>
 
-            <form className="mt-16 max-w-3xl" onClick={handleSubmit}>
+            <form className="mt-16 max-w-3xl">
                 <div className="flex flex-col gap-5">
                     <FormField
                         labelName="Dein Name"
@@ -164,6 +164,7 @@ const Create = () => {
                             es mit der Community teilen!
                         </p>
                         <button
+                            onClick={handleSubmit}
                             className="mt-3 w-full rounded-md bg-blue-700 px-4 py-2.5 text-sm font-medium text-white sm:w-auto"
                             type="submit"
                         >
