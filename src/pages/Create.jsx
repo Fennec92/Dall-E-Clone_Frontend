@@ -43,7 +43,7 @@ const Create = () => {
             try {
                 setCreatingImage(true);
                 const openAiRouteResponse = await fetch(
-                    "http://localhost:8080/api/openai",
+                    "https://dall-e-clone-kud3.onrender.com/api/openai",
                     {
                         method: "POST",
                         headers: {
@@ -77,7 +77,7 @@ const Create = () => {
 
             try {
                 const postResponse = await fetch(
-                    "http://localhost:8080/api/post",
+                    "https://dall-e-clone-kud3.onrender.com/api/post",
                     {
                         method: "POST",
                         headers: {

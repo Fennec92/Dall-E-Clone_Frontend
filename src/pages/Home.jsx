@@ -30,7 +30,7 @@ const Home = () => {
 
             try {
                 const getAllPosts = await fetch(
-                    "http://localhost:8080/api/post",
+                    "https://dall-e-clone-kud3.onrender.com/api/post",
                     {
                         method: "GET",
                         headers: {
