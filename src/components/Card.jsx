@@ -3,7 +3,7 @@ import { downloadImage } from "../utilityFunctions/exportUtilityFunctions";
 
 const Card = ({ _id, name, description, image }) => {
     return (
-        <div className="card relative rounded-xl shadow-sm hover:shadow-2xl">
+        <div className="card group relative rounded-xl shadow-sm hover:shadow-2xl">
             <img
                 src={image}
                 alt={description}
